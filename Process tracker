@@ -1,0 +1,13 @@
+##########################################################################
+#                       MasterBlaster - FunCorp                          #
+# This script looks for processes and returns selected process in time   #
+# interval                                                               #
+##########################################################################
+
+$cores = (Get-WmiObject Win32_Processor).NumberOfLogicalProcessors
+while ($true) {
+    Get-WmiObject Win32_PerfFormattedData_PerfProc_Process | 
+    Where-Object {$_.Name -notmatch "^(idle|_total|system)$" -and $_.PercentProcessorTime -gt 0} |
+    Format-Table -Autosize -Property @{Name = "CPU"; Expression = {[int]($_.PercentProcessorTime/$cores)}}, Name, @{Name = "PID"; Expression = {$_.IDProcess}}, @{"Name" = "WSP(MB)"; Expression = {[int]($_.WorkingSetPrivate/1mb)}}
+    Start-Sleep 5
+}
