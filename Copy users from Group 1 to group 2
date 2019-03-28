@@ -1,0 +1,12 @@
+##########################################################################
+#                       MasterBlaster - FunCorp                          #
+# Copy users from Group 1 to group 2                                     #
+##########################################################################
+
+$newgroup = "xxx"
+$oldgroup = "zzz"
+     
+
+$list = Get-ADGroupMember $oldgroup -Recursive -Server xxx
+$uziv = $list.SamAccountName
+Add-ADGroupMember -Identity $newgroup -Members $uziv -Server xxx 
