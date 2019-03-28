@@ -1,0 +1,15 @@
+##########################################################################
+#                       MasterBlaster - FunCorp                          #
+# This script search recursively Users folder - than compare all founds  #
+# usernames and compare this results with Users in AD and return info    #
+# about users like First and Last name, Email Adress and if user active  #
+# or not.                                                                #
+##########################################################################
+
+$Server = Read-Host -Prompt 'Input your server  name in UNC format like (Hostname)'
+$Uzici = Get-ChildItem "\\$($Server)\c$\users" | Select-Object -Property Name -OutVariable Files | Tee-Object -Variable Files | Sort-Object -Property Length -Descending
+
+$EU = ForEach ($User in $Uzici) 
+    { Get-Aduser $User.Name  -Properties emailAddress}
+
+Echo $EU | Sort-Object samAccountName | Format-Table SamAccountName,GivenName,SurName,Enabled,EmailAddress,ObjectClass
