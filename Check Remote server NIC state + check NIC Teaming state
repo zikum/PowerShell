@@ -9,3 +9,12 @@ $Server = Read-Host -Prompt 'Input your server  name (Hostname)'
 Get-NetAdapter -CimSession "$Server"
 Get-NetLbfoTeam -CimSession "$Server" | Format-Table
 }
+
+
+# Version 1.5
+#function Get-Adapters-Info {
+#$Server = Read-Host -Prompt 'Input your server  name (Hostname)'
+#$session = New-PSSession -ComputerName $Server
+#Invoke-Command -Session $session -ScriptBlock {Get-NetLbfoTeam | Format-Table}
+#Invoke-Command -Session $session -ScriptBlock {Get-NetAdapter}
+#} 
