@@ -1,0 +1,11 @@
+##########################################################################
+#                       MasterBlaster - FunCorp                          #
+# This script looks for adapters at given hostname and returns list of   #
+# and if teamin logical adapter set than status of this adapter.         #
+##########################################################################
+
+function Get-Adapters-Info {
+$Server = Read-Host -Prompt 'Input your server  name (Hostname)'
+Get-NetAdapter -CimSession "$Server"
+Get-NetLbfoTeam -CimSession "$Server" | Format-Table
+}
